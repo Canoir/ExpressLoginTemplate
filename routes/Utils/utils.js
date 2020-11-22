@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const Counter = require("../../models/Counter");
 
 const Utils = {
   //Get Current User if is valid and set it in :
@@ -45,5 +46,18 @@ const Utils = {
     //new Login
     else next();
   },
+  findNextId: async (dbName) => {
+    const res = await Counter.findOne({ Name: dbName });
+    let result;
+    if (res) {
+      result = res.Count;
+      await res.updateOne({ Count: res.Count + 1 });
+    } else {
+      await new Counter({ Name: dbName }).save();
+      result = 1;
+    }
+    return result;
+  },
+  Roles: { User: 0, Admin: 1, God: 2 },
 };
 module.exports = Utils;

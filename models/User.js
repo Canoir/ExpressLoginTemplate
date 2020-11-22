@@ -5,7 +5,7 @@ const User = mongoose.model(
   new mongoose.Schema({
     RoleId: {
       type: Number,
-      required: true,
+      default:0
     },
     Username: {
       type: String,
